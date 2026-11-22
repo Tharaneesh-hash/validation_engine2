@@ -16,7 +16,7 @@ import {
   RefreshCw,
   Copy
 } from 'lucide-react';
-import api from '../services/api';
+import api, { API_BASE } from '../services/api';
 
 export default function Settings() {
   const [dbStatus, setDbStatus] = useState(null);
@@ -139,7 +139,16 @@ export default function Settings() {
         options.body = apiRequestBody || '{}';
       }
 
-      const res = await fetch(selectedEndpoint, options);
+      let targetUrl = selectedEndpoint;
+      if (API_BASE.startsWith('http://') || API_BASE.startsWith('https://')) {
+        let clean = selectedEndpoint;
+        if (API_BASE.endsWith('/api') && clean.startsWith('/api')) {
+          clean = clean.substring(4);
+        }
+        targetUrl = `${API_BASE}${clean}`;
+      }
+
+      const res = await fetch(targetUrl, options);
       const data = await res.json().catch(() => null);
 
       setApiResponse({
@@ -273,7 +282,7 @@ export default function Settings() {
               Interactive REST API Documentation & Console
             </h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Base URL: /api</span>
+          <span className="text-xs text-slate-400 font-mono">Base URL: {API_BASE}</span>
         </div>
 
         {/* Endpoint Selector Tabs */}

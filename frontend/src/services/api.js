@@ -1,12 +1,20 @@
 /**
  * REST API Client for Validation Engine Platform
- * Handles communication with Express backend.
+ * Handles communication with Express backend using VITE_API_URL environment configuration.
  */
 
-const API_BASE = '/api';
+const envApiUrl = import.meta.env?.VITE_API_URL;
+export const API_BASE = (envApiUrl ? envApiUrl.replace(/\/+$/, '') : '/api');
 
 async function request(endpoint, options = {}) {
-  const url = `${API_BASE}${endpoint}`;
+  let cleanEndpoint = endpoint;
+  if (API_BASE.endsWith('/api') && cleanEndpoint.startsWith('/api')) {
+    cleanEndpoint = cleanEndpoint.substring(4);
+  } else if (!cleanEndpoint.startsWith('/')) {
+    cleanEndpoint = `/${cleanEndpoint}`;
+  }
+
+  const url = `${API_BASE}${cleanEndpoint}`;
   const defaultHeaders = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
