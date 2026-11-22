@@ -5,7 +5,10 @@
   "scripts": {
     "start": "node backend/src/server.js",
     "server": "node backend/src/server.js",
-    "client": "npm run dev --prefix frontend",
+    "client": "npm run dev --prefix client",
+    "frontend": "npm run dev --prefix client",
+    "dev": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
     "test": "node backend/src/tests/runAllTests.js",
     "test:api": "node backend/src/tests/apiIntegration.test.js"
   },
