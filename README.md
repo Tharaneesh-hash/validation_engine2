@@ -234,7 +234,7 @@ npm install --prefix backend
 Create `backend/.env` based on `backend/.env.example`:
 ```env
 PORT=5000
-NODE_ENV=development
+NODE_ENV=production
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/validation_engine?retryWrites=true&w=majority
 ALLOWED_ORIGIN=*
 ```

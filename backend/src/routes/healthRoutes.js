@@ -19,7 +19,7 @@ router.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
     uptimeSeconds: Math.floor((Date.now() - serverStartTime) / 1000),
     version: '1.0.0',
-    environment: process.env.NODE_ENV || 'development',
+    environment: process.env.NODE_ENV || 'production',
     memoryUsageMB: {
       rss: Math.round(memory.rss / (1024 * 1024)),
       heapTotal: Math.round(memory.heapTotal / (1024 * 1024)),
