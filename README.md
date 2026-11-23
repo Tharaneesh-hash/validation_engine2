@@ -302,27 +302,18 @@ node backend/src/tests/apiIntegration.test.js
 1. Push repository to GitHub.
 2. Log in to [Vercel](https://vercel.com) and click **"Add New Project"**.
 3. Select this repository.
-4. Set **Root Directory** to `frontend`.
-5. Set **Build Command** to `npm run build`.
-6. Set **Output Directory** to `dist`.
-7. Add Environment Variable:
-   - `VITE_API_BASE_URL`: `https://validation-engine-backend.onrender.com/api`
-8. Click **Deploy**.
+4. Keep **Root Directory** at the repository root; the root `vercel.json` builds `client`.
+5. Add the `VITE_API_URL` environment variable with the Render backend URL ending in `/api` (for example, `https://<render-service>.onrender.com/api`).
+6. Click **Deploy**.
 
 ### Deploy Backend on Render
 1. Log in to [Render](https://render.com) and create a **"New Web Service"**.
 2. Connect your GitHub repository.
-3. Configure settings:
-   - **Environment**: `Node`
-   - **Root Directory**: `backend`
-   - **Build Command**: `npm install`
-   - **Start Command**: `node src/server.js`
-4. Add Environment Variables:
-   - `PORT`: `5000`
-   - `NODE_ENV`: `production`
-   - `MONGODB_URI`: Your MongoDB Atlas connection URI (`mongodb+srv://...`)
-   - `ALLOWED_ORIGIN`: Your Vercel frontend URL (e.g. `https://validation-engine.vercel.app`)
-5. Click **Create Web Service**.
+3. Use the settings in `render.yaml` (Oregon, Free plan, and `backend` as the root directory).
+4. Add `MONGODB_URI` in Render's environment settings using your Atlas connection string; keep it out of the repository.
+5. Leave `NODE_ENV` set to `production` as configured.
+6. Click **Create Web Service**.
+7. After deployment, set Vercel's `VITE_API_URL` to the Render service URL with `/api` appended, then redeploy the frontend.
 
 ### Configure MongoDB Atlas Database
 1. Create a free M0 cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
